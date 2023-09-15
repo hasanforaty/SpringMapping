@@ -89,5 +89,12 @@ public class SpringMappingApplication {
     System.out.println("Done....");
   }
 
+  /**
+   * TODO 1 : Prep work - define Database tables
+   * TODO 2 : Create Course class
+   * TODO 3 : Update Instructor Class
+   * TODO 4 : create Main App
+   */
+
 
 }
