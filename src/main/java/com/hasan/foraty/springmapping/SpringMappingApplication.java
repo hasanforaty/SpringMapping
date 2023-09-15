@@ -21,8 +21,26 @@ public class SpringMappingApplication {
     return runner ->{
 //      createInstructor(appDAO);
 //      findInstructor(appDAO);
-      deleteInstructor(appDAO);
+//      deleteInstructor(appDAO);
+//      findInstructorDetail(appDAO);
+//      deleteInstructorDetail(appDAO);
     };
+  }
+
+  private void deleteInstructorDetail(AppDAO appDAO) {
+    int theId = 3;
+    System.out.println("Delete Instructor Detail with Id : "+theId);
+    appDAO.deleteInstructorDetailById(theId);
+    System.out.println("Done....");
+  }
+
+  private void findInstructorDetail(AppDAO appDAO) {
+    int theId = 2;
+    System.out.println("Finding instructor detail with id : "+theId);
+    InstructorDetail instructorDetail = appDAO.findInstructorDetailById(theId);
+    System.out.println("Instructor Detail : "+instructorDetail);
+    System.out.println("Associated Instructor : "+instructorDetail.getInstructor());
+
   }
 
   private void deleteInstructor(AppDAO appDAO) {
@@ -44,21 +62,21 @@ public class SpringMappingApplication {
   }
 
   private void createInstructor(AppDAO appDAO) {
-//    Instructor tempInstructor = new Instructor("chand","Darby","darby@luv2code.com");
-//
-//    InstructorDetail tempInstructorDetail = new InstructorDetail(
-//        "http://www.luv2code.com/youtube",
-//        "Luv 2 code !!!"
-//    );
-
-
-
-    Instructor tempInstructor = new Instructor("hasan","forat","forat@luv2code.com");
+    Instructor tempInstructor = new Instructor("chand","Darby","darby@luv2code.com");
 
     InstructorDetail tempInstructorDetail = new InstructorDetail(
-        "http://www.hasanforaty.com/youtube",
-        "Chess,programming "
+        "http://www.luv2code.com/youtube",
+        "Luv 2 code !!!"
     );
+
+
+
+//    Instructor tempInstructor = new Instructor("hasan","forat","forat@luv2code.com");
+//
+//    InstructorDetail tempInstructorDetail = new InstructorDetail(
+//        "http://www.hasanforaty.com/youtube",
+//        "Chess,programming "
+//    );
 
     tempInstructor.setInstructorDetail(tempInstructorDetail);
 

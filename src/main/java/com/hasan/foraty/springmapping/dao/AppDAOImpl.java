@@ -1,6 +1,7 @@
 package com.hasan.foraty.springmapping.dao;
 
 import com.hasan.foraty.springmapping.entity.Instructor;
+import com.hasan.foraty.springmapping.entity.InstructorDetail;
 import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,5 +31,20 @@ public class AppDAOImpl implements AppDAO {
   @Transactional
   public void deleteInstructorById(int theId) {
     entityManager.remove(findInstructorById(theId));
+  }
+
+  @Override
+  public InstructorDetail findInstructorDetailById(int theId) {
+    return entityManager.find(InstructorDetail.class,theId);
+  }
+
+  @Override
+  @Transactional
+  public void deleteInstructorDetailById(int theId) {
+    InstructorDetail instructorDetail = entityManager.find(InstructorDetail.class,theId);
+    System.out.println("Start disconnecting Instructor ");
+    instructorDetail.getInstructor().setInstructorDetail(null);
+    System.out.println("Start removing Instructor Detail");
+    entityManager.remove(instructorDetail);
   }
 }
