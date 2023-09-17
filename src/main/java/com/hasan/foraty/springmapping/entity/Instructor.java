@@ -7,8 +7,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
  import jakarta.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "instructor")
@@ -33,6 +36,14 @@ public class Instructor {
   @JoinColumn(name = "instructor_detail_id")
   private InstructorDetail instructorDetail;
 
+  @OneToMany(mappedBy = "instructor",cascade = {
+      CascadeType.DETACH,
+      CascadeType.PERSIST,
+      CascadeType.MERGE,
+      CascadeType.REFRESH
+  })
+  private List<Course> courses;
+
 
   public Instructor() {
   }
@@ -41,6 +52,23 @@ public class Instructor {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
+  }
+
+  public Instructor(String firstName, String lastName, String email,
+      InstructorDetail instructorDetail, List<Course> courses) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.instructorDetail = instructorDetail;
+    this.courses = courses;
+  }
+
+  public List<Course> getCourses() {
+    return courses;
+  }
+
+  public void setCourses(List<Course> courses) {
+    this.courses = courses;
   }
 
   public int getId() {
@@ -94,4 +122,14 @@ public class Instructor {
         ", instructorDetailId=" + instructorDetail +
         '}';
   }
+
+  public void add(Course course){
+    if (courses==null){
+      courses = new ArrayList<>();
+    }
+    courses.add(course);
+    course.setInstructor(this);
+  }
+
+
 }

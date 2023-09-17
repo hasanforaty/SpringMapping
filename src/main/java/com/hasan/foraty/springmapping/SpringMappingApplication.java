@@ -1,6 +1,7 @@
 package com.hasan.foraty.springmapping;
 
 import com.hasan.foraty.springmapping.dao.AppDAO;
+import com.hasan.foraty.springmapping.entity.Course;
 import com.hasan.foraty.springmapping.entity.Instructor;
 import com.hasan.foraty.springmapping.entity.InstructorDetail;
 import org.springframework.boot.CommandLineRunner;
@@ -24,7 +25,42 @@ public class SpringMappingApplication {
 //      deleteInstructor(appDAO);
 //      findInstructorDetail(appDAO);
 //      deleteInstructorDetail(appDAO);
+      createInstructorWithCourses(appDAO);
     };
+  }
+
+  private void createInstructorWithCourses(AppDAO appDAO) {
+
+    Instructor tempInstructor = new Instructor("Susan","Pofay","SusanPufforay@Gmail.com");
+
+    InstructorDetail tempInstructorDetail = new InstructorDetail(
+        "http://www.luv2code.com/youtube",
+        "Gaming!"
+    );
+
+
+
+//    Instructor tempInstructor = new Instructor("hasan","forat","forat@luv2code.com");
+//
+//    InstructorDetail tempInstructorDetail = new InstructorDetail(
+//        "http://www.hasanforaty.com/youtube",
+//        "Chess,programming "
+//    );
+
+    tempInstructor.setInstructorDetail(tempInstructorDetail);
+    Course tempCourse1 = new Course("Air bag making guide");
+    Course tempCourse2 = new Course("Spring with charley");
+    tempInstructor.add(tempCourse1);
+    tempInstructor.add(tempCourse2);
+
+
+
+    System.out.println("Saving Instructor "+tempInstructor);
+    System.out.println("The courses : "+tempInstructor.getCourses());
+    appDAO.save(tempInstructor);
+
+
+    System.out.println("Done....");
   }
 
   private void deleteInstructorDetail(AppDAO appDAO) {
@@ -89,10 +125,7 @@ public class SpringMappingApplication {
     System.out.println("Done....");
   }
 
-  /**
-   * TODO 1 : Prep work - define Database tables
-   * TODO 2 : Create Course class
-   * TODO 3 : Update Instructor Class
+  /*
    * TODO 4 : create Main App
    */
 
