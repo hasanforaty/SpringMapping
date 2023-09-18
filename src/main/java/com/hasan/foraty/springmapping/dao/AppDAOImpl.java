@@ -1,10 +1,14 @@
 package com.hasan.foraty.springmapping.dao;
 
+import com.hasan.foraty.springmapping.entity.Course;
 import com.hasan.foraty.springmapping.entity.Instructor;
 import com.hasan.foraty.springmapping.entity.InstructorDetail;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 @Repository
@@ -46,5 +50,28 @@ public class AppDAOImpl implements AppDAO {
     instructorDetail.getInstructor().setInstructorDetail(null);
     System.out.println("Start removing Instructor Detail");
     entityManager.remove(instructorDetail);
+  }
+
+  @Override
+  public List<Course> findCoursesByInstructorId(int theId) {
+
+    TypedQuery<Course> result = entityManager.createQuery("from Course where instructor.id=:data", Course.class);
+    result.setParameter("data",theId);
+
+    return result.getResultList();
+  }
+
+  @Override
+  public Instructor findInstructorByIdJoinFetch(int theId) {
+
+    TypedQuery<Instructor> query = entityManager.createQuery(
+            "select i from Instructor i " +
+                    "join fetch i.courses " +
+                    "join fetch i.instructorDetail "+
+                    "where i.id=:data"
+            ,Instructor.class);
+    query.setParameter("data",theId);
+
+    return query.getSingleResult();
   }
 }
