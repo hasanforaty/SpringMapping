@@ -30,9 +30,36 @@ public class SpringMappingApplication {
 //      createInstructorWithCourses(appDAO);
 //      findInstructorWithCourses(appDAO);
 //      findCoursesForInstructor(appDAO);
-      findInstructorWithCoursesJoinFetch(appDAO);
-
+//      findInstructorWithCoursesJoinFetch(appDAO);
+//      updateInstructor(appDAO);
+//      updateCourse(appDAO);
+//      deleteCourseById(appDAO);
     };
+  }
+
+  private void deleteCourseById(AppDAO appDAO) {
+    int theId = 10;
+    System.out.println("Deleting course by Id : "+theId);
+    appDAO.deleteCourseById(theId);
+    System.out.println("Done....");
+  }
+
+  private void updateCourse(AppDAO appDAO) {
+    int theId= 10;
+    System.out.println("Finding course by Id : "+theId);
+    Course tempCourse = appDAO.findCourseById(theId);
+    System.out.println("Current Course : "+tempCourse);
+    tempCourse.setTitle("Enjoy the simple things");
+    appDAO.update(tempCourse);
+  }
+
+  private void updateInstructor(AppDAO appDAO) {
+    int theId= 1;
+    System.out.println("Finding Instructor id : "+theId);
+    Instructor tempInstructor = appDAO.findInstructorById(theId);
+    tempInstructor.setLastName("Tester");
+    appDAO.update(tempInstructor);
+    System.out.println("Updated....");
   }
 
   private void findInstructorWithCoursesJoinFetch(AppDAO appDAO) {
