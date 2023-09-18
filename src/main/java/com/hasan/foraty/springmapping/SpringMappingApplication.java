@@ -4,6 +4,7 @@ import com.hasan.foraty.springmapping.dao.AppDAO;
 import com.hasan.foraty.springmapping.entity.Course;
 import com.hasan.foraty.springmapping.entity.Instructor;
 import com.hasan.foraty.springmapping.entity.InstructorDetail;
+import com.hasan.foraty.springmapping.entity.Review;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -34,7 +35,40 @@ public class SpringMappingApplication {
 //      updateInstructor(appDAO);
 //      updateCourse(appDAO);
 //      deleteCourseById(appDAO);
+//      createCourseWithReview(appDAO);
+//      retriveCourseAndReviews(appDAO);
+//      deleteCourseAndReviews(appDAO);
     };
+  }
+
+  private void deleteCourseAndReviews(AppDAO appDAO) {
+    int theId =10;
+    System.out.println("deleting course id :"+theId);
+    appDAO.deleteCourseById(theId);
+  }
+
+  private void retriveCourseAndReviews(AppDAO appDAO) {
+    int theId = 10;
+    System.out.println("Finding Course and reviews with id :"+theId);
+    Course tempCourse = appDAO.findCourseAndReviewByCourseId(theId);
+    System.out.println(tempCourse);
+    System.out.println(tempCourse.getReviews());
+    System.out.println("Done.......");
+
+  }
+
+  private void createCourseWithReview(AppDAO appDAO) {
+    Course tempCourse = new Course("Pacman - how to score one Million Points");
+
+
+    tempCourse.add(new Review("Great Course ... loved it "));
+    tempCourse.add(new Review("cool Course , job well done."));
+    tempCourse.add(new Review("what a dumb course , are you an idiot"));
+    System.out.println("saving the course");
+    System.out.println(tempCourse);
+    System.out.println(tempCourse.getReviews());
+    appDAO.save(tempCourse);
+    System.out.println("Done.....");
   }
 
   private void deleteCourseById(AppDAO appDAO) {
