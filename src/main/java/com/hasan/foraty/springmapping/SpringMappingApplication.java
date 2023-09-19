@@ -1,10 +1,7 @@
 package com.hasan.foraty.springmapping;
 
 import com.hasan.foraty.springmapping.dao.AppDAO;
-import com.hasan.foraty.springmapping.entity.Course;
-import com.hasan.foraty.springmapping.entity.Instructor;
-import com.hasan.foraty.springmapping.entity.InstructorDetail;
-import com.hasan.foraty.springmapping.entity.Review;
+import com.hasan.foraty.springmapping.entity.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -38,7 +35,72 @@ public class SpringMappingApplication {
 //      createCourseWithReview(appDAO);
 //      retriveCourseAndReviews(appDAO);
 //      deleteCourseAndReviews(appDAO);
+
+//        createCourseAndStudent(appDAO);
+
+//      findCourseAndStudent(appDAO);
+//      findStudentAndCourses(appDAO);
+
+//      addMoreCoursesForStudent(appDAO);
+
+//      deleteCourseById(appDAO);
+//        deleteStudent(appDAO);
     };
+  }
+
+  private void deleteStudent(AppDAO appDAO) {
+    int id =9;
+    System.out.println("Deleting Student id : "+id);
+    appDAO.deleteStudentById(id);
+
+    System.out.println("Done.....");
+  }
+
+
+  private void addMoreCoursesForStudent(AppDAO appDAO) {
+    int theId= 8;
+    Student tempStudent = appDAO.findStudentAndCourseByStudentId(theId);
+
+    Course tempCourse1 = new Course("Spring 3 with help of hibernate");
+    Course tempCourse2 = new Course("Rubik's cub - how to speed cube");
+    Course tempCourse3 = new Course("Atari 2600 game development");
+
+    tempStudent.addCourse(tempCourse1);
+    tempStudent.addCourse(tempCourse2);
+    tempStudent.addCourse(tempCourse3);
+
+    System.out.println("Saving student : "+tempStudent);
+    System.out.println("Associated Courses "+tempStudent.getCourses());
+    appDAO.update(tempStudent);
+  }
+
+  private void findStudentAndCourses(AppDAO appDAO) {
+    int theId= 5;
+    Student tempStudent= appDAO.findStudentAndCourseByStudentId(theId);
+    System.out.println(tempStudent);
+    System.out.println(tempStudent.getCourses());
+  }
+
+  private void findCourseAndStudent(AppDAO appDAO) {
+    int theId=  11;
+    Course tempCourse = appDAO.findCourseAndStudentByCourseId(theId);
+    System.out.println(tempCourse);
+    System.out.println(tempCourse.getStudents());
+  }
+
+  private void createCourseAndStudent(AppDAO appDAO) {
+    Course tempCourse = new Course("Spring boot 3");
+
+    Student tempStudent1 = new Student("Janatan","jackMan","JMan@doe.com");
+    Student tempStudent2 = new Student("Sara","Morty","love2code@gmail.com");
+    Student tempStudent3 = new Student("Ali","Foratizadeh","Alex@gmail.com");
+    Student tempStudent4 = new Student("Zahra","Foratizadeh","ZahraFF@gmail.com");
+    tempCourse.addStudent(tempStudent1);
+    tempCourse.addStudent(tempStudent2);
+    tempCourse.addStudent(tempStudent3);
+    tempCourse.addStudent(tempStudent4);
+    appDAO.save(tempCourse);
+
   }
 
   private void deleteCourseAndReviews(AppDAO appDAO) {
@@ -72,7 +134,7 @@ public class SpringMappingApplication {
   }
 
   private void deleteCourseById(AppDAO appDAO) {
-    int theId = 10;
+    int theId = 11;
     System.out.println("Deleting course by Id : "+theId);
     appDAO.deleteCourseById(theId);
     System.out.println("Done....");

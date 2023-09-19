@@ -2,6 +2,7 @@ package com.hasan.foraty.springmapping.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,7 +34,7 @@ public class Student {
     @JoinTable(
             name = "course_student",
             joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "cousrse_id")
+            inverseJoinColumns = @JoinColumn(name = "course_id")
     )
     List<Course> courses;
 
@@ -41,11 +42,10 @@ public class Student {
     public Student() {
     }
 
-    public Student(String firstName, String lastName, String email, List<Course> courses) {
+    public Student(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.courses = courses;
     }
 
     public int getId() {
@@ -86,6 +86,13 @@ public class Student {
 
     public void setCourses(List<Course> courses) {
         this.courses = courses;
+    }
+
+    public void addCourse(Course theCourse){
+        if(courses==null){
+            courses = new ArrayList<>();
+        }
+        courses.add(theCourse);
     }
 
     @Override

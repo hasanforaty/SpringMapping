@@ -3,6 +3,7 @@ package com.hasan.foraty.springmapping.dao;
 import com.hasan.foraty.springmapping.entity.Course;
 import com.hasan.foraty.springmapping.entity.Instructor;
 import com.hasan.foraty.springmapping.entity.InstructorDetail;
+import com.hasan.foraty.springmapping.entity.Student;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
@@ -121,5 +122,42 @@ public class AppDAOImpl implements AppDAO {
     );
     query.setParameter("data",theId);
     return query.getSingleResult();
+  }
+
+  @Override
+  public Course findCourseAndStudentByCourseId(int theId) {
+    TypedQuery<Course> query = entityManager.createQuery(
+            "SELECT i from Course i " +
+                    "join FETCH i.students "+
+                    "WHERE i.id=:data",
+            Course.class);
+    query.setParameter("data",theId);
+
+    return query.getSingleResult();
+  }
+
+  @Override
+  public Student findStudentAndCourseByStudentId(int theId) {
+    TypedQuery<Student> query = entityManager.createQuery(
+            "SELECT i from Student i " +
+                    "join FETCH i.courses "+
+                    "WHERE i.id=:data",
+            Student.class);
+    query.setParameter("data",theId);
+
+    return query.getSingleResult();
+  }
+
+  @Override
+  @Transactional
+  public void update(Student tempStudent) {
+    entityManager.merge(tempStudent);
+  }
+
+  @Override
+  @Transactional
+  public void deleteStudentById(int theId) {
+    Student tempStudent = entityManager.find(Student.class,theId);
+    entityManager.remove(tempStudent);
   }
 }

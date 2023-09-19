@@ -38,7 +38,7 @@ public class Course {
   )
   @JoinTable(
           name = "course_student",
-          joinColumns = @JoinColumn(name = "cousrse_id"),
+          joinColumns = @JoinColumn(name = "course_id"),
           inverseJoinColumns = @JoinColumn(name = "student_id")
   )
   private List<Student> students;
@@ -99,6 +99,13 @@ public class Course {
     reviews.add(tempReview);
   }
 
+
+  public void addStudent(Student student){
+    if (students==null){
+      students = new ArrayList<>();
+    }
+    students.add(student);
+  }
   @Override
   public String toString() {
     return "Course{" +

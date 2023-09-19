@@ -4,6 +4,7 @@ package com.hasan.foraty.springmapping.dao;
 import com.hasan.foraty.springmapping.entity.Course;
 import com.hasan.foraty.springmapping.entity.Instructor;
 import com.hasan.foraty.springmapping.entity.InstructorDetail;
+import com.hasan.foraty.springmapping.entity.Student;
 
 import java.util.List;
 
@@ -36,7 +37,15 @@ public interface AppDAO  {
 
 
 
+  Course findCourseAndStudentByCourseId(int theId);
 
 
+  Student findStudentAndCourseByStudentId(int theId);
+
+
+  void update(Student tempStudent);
+
+
+  void deleteStudentById(int theId);
 
 }
